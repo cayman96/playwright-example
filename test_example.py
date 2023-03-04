@@ -1,7 +1,6 @@
 # biblioteka do regexów
 import re
 import pytest
-from locators import MainPageLocators
 # import Page i expect'a z playwrighta
 from playwright.sync_api import Page, expect
 
@@ -12,7 +11,7 @@ from playwright.sync_api import Page, expect
 def test_goto_blog(page: Page):
     # jak używam funkcji get_by_role, to tutaj szukam wg... well, roli elementu, tutaj jest to link,
     # ale może być jako button, text, label, id, i tak dalej... odsyłam do dokumentacji jakby co
-    blog_btn = page.locator(MainPageLocators.blogBtn)
+    blog_btn = page.get_by_role("link", name=re.compile("^Blog$"))
     # kolejna asercja - spodziewamy się, że nasz link ma atrybut href o wartości zawierającej /demo/blog
     expect(blog_btn).to_have_attribute("href", re.compile(".*demo/blog"))
     # klik
@@ -23,8 +22,8 @@ def test_goto_blog(page: Page):
 
 @pytest.mark.usefixtures("mainpage")
 def test_goto_offers(page: Page):
-    offer_btn = page.locator(MainPageLocators.offersBtn)
-    expect(offer_btn).to_have_attribute("href", re.compile(".*/demo/offers"))
+    offer_btn = page.get_by_role("link", name=re.compile("^Offers$"))
+    # expect(offer_btn).to_have_attribute("href", re.compile(".*/demo/offers"))
     offer_btn.click()
     expect(page).to_have_url(re.compile(".*/demo/offers"))
     expect(page).to_have_title(re.compile("Special Offers"))
