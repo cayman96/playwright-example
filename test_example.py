@@ -23,7 +23,7 @@ def test_goto_blog(page: Page):
 @pytest.mark.usefixtures("mainpage")
 def test_goto_offers(page: Page):
     offer_btn = page.get_by_role("link", name=re.compile("^Offers$"))
-    # expect(offer_btn).to_have_attribute("href", re.compile(".*/demo/offers"))
+    expect(offer_btn).to_have_attribute("href", re.compile(".*/demo/offers"))
     offer_btn.click()
     expect(page).to_have_url(re.compile(".*/demo/offers"))
     expect(page).to_have_title(re.compile("Special Offers"))
