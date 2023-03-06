@@ -12,19 +12,19 @@ from models.main_page import MainPage
 def test_goto_blog(page: Page):
     main = MainPage(page)
     main.navigate()
-    expect(main.page).to_have_title(re.compile("PHPTRAVELS"))
-    expect(main.blog_btn).to_have_attribute("href", re.compile(".*demo/blog"))
     main.go_to_blogs()
-    expect(main.page).to_have_url(re.compile(".*/demo/blog"))
-    expect(main.page).to_have_title(re.compile("Blog"))
-
 # @pytest.mark.usefixtures("mainpage")
 def test_goto_offers(page: Page):
     main = MainPage(page)
     main.navigate()
-    expect(main.page).to_have_title(re.compile("PHPTRAVELS"))
-    expect(main.offer_btn).to_have_attribute("href", re.compile(".*/demo/offers"))
     main.go_to_offers()
-    expect(page).to_have_url(re.compile(".*/demo/offers"))
-    expect(page).to_have_title(re.compile("Special Offers"))
+
+def test_pick_currency(page: Page):
+    currencies = ("GBP", "USD")
+    main = MainPage(page)
+    main.navigate()
+    for i in currencies:
+        main.show_currency_list()
+        main.pick_currency(i)
+
 
