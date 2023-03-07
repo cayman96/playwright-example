@@ -40,7 +40,7 @@ class MainPage:
 
     def pick_currency(self, curr: str):
         expect(self.currency_list).to_be_visible()
-        target = self.page.get_by_text(f" {curr} ").last
+        target = self.page.get_by_role("link", name=curr, exact=True)
         expect(target).to_be_visible()
         target.click()
         expect(self.currency_btn).to_contain_text(f" {curr} ")
