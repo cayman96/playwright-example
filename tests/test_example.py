@@ -13,11 +13,14 @@ def test_goto_blog(page: Page):
     main = MainPage(page)
     main.navigate()
     main.go_to_blogs()
+
+
 # @pytest.mark.usefixtures("mainpage")
 def test_goto_offers(page: Page):
     main = MainPage(page)
     main.navigate()
     main.go_to_offers()
+
 
 def test_pick_currency(page: Page):
     currencies = ("GBP", "USD")
@@ -27,4 +30,13 @@ def test_pick_currency(page: Page):
         main.show_currency_list()
         main.pick_currency(i)
 
+
+def test_search_hotel_or_city(page: Page):
+    main = MainPage(page)
+    main.navigate()
+    main.get_search_text()
+    main.type_in_city("Dubai")
+    main.type_in_check_in("01/01/2023")
+    main.type_in_check_out("30/06/2023")
+    main.search()
 
