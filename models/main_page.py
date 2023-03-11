@@ -16,10 +16,6 @@ class MainPage:
         self.check_out = self.page.locator("xpath=//*[@id='dpd2']/div/input")
         self.adults_child = self.page.get_by_text("2 Adult 0 Child")
 
-    def navigate(self):
-        self.page.goto("http://www.kurs-selenium.pl/demo/")
-        expect(self.page).to_have_title(re.compile("PHPTRAVELS"))
-
     def go_to_blogs(self):
         expect(self.blog_btn).to_be_visible()
         expect(self.blog_btn).to_have_attribute("href", re.compile(".*demo/blog"))
@@ -43,7 +39,7 @@ class MainPage:
         target = self.page.get_by_role("link", name=curr, exact=True)
         expect(target).to_be_visible()
         target.click()
-        expect(self.currency_btn).to_contain_text(f" {curr} ")
+        expect(self.currency_btn).to_contain_text(f"{curr}")
 
     def get_search_text(self):
         expect(self.search_field).to_be_visible()
@@ -51,7 +47,9 @@ class MainPage:
     def type_in_city(self, city: str):
         self.search_field.click()
         self.search_field.type(city)
+        expect(self.page.get_by_text("Locations")).to_be_visible()
         location = self.page.get_by_text(city).last
+        expect(location).to_be_visible()
         location.click()
 
     def type_in_check_in(self, date: str):
